@@ -1,0 +1,11 @@
+a = input("enter your no.\n")
+f = input("enter yor fn\n")
+b = input("enter the second no\n")
+if f=="+":
+    print("sum is: ",a + b)
+elif f=="*":
+    print("sum is: ", a * b)
+elif f=="-":
+    print("sum is: ", a - b)
+elif f=="/":
+    print("sum is: ", a / b)
