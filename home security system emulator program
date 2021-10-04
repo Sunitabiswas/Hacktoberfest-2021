@@ -1,0 +1,76 @@
+[1:14 PM, 10/4/2021] Sunita Biswas: #include <LiquidCrystal.h>
+int ledPin = 13; 
+int inputPin = 7; 
+int pirState = LOW; 
+int val = 0; 
+int pinSpeaker = 10; 
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
+void setup() { pinMode(ledPin, OUTPUT); 
+
+ pinMode(pinSpeaker, OUTPUT);
+ Serial.begin(9600);
+ lcd.begin(16, 2);
+ lcd.setCursor(2, 0);
+ lcd.print("P.I.R Motion"); 
+ lcd.setCursor(5, 1);
+ lcd.print("Sensor"); 
+ delay(4000); 
+ lcd.clear(); 
+ lcd.setCursor(2, 0);
+ lcd.print("Developed By"); 
+ lcd.setCursor(2, 1); 
+ lcd.print("suni see utk subh smri");
+delay(5000); 
+lcd.clear();
+lcd.setCursor(0, 0);
+ lcd.print("Processing Data.");
+ delay(3000);
+ lcd.clear();
+ lcd.setCursor(3, 0);
+ lcd.print("Waiting For");
+ lcd.setCursor(3, 1);
+ lcd.print("Motion....");
+}
+void loop(){
+ val = digitalRead(inputPin); 
+ if (val == HIGH) { 
+ digitalWrite(ledPin, HIGH); 
+ playTone(300, 300);
+ delay(4000);
+ playTone(0, 0);
+
+ if (pirState == LOW) {
+ 
+ Serial.println("Motion detected!");
+ lcd.clear() ;
+ lcd.setCursor(0, 0); 
+ lcd.print("Motion Detected!");
+
+ 
+ pirState = HIGH;
+ }
+ } else {
+ digitalWrite(ledPin, LOW);
+ playTone(0, 0);
+ delay(300);
+ if (pirState == HIGH){
+ 
+ Serial.println("Motion ended!");
+ lcd.clear() ;
+ lcd.setCursor(3, 0);
+ lcd.print("Waiting For");
+ lcd.setCursor(3, 1);
+ lcd.print("Motion...."); 
+ pirState = LOW; } } } 
+void playTone(long duration, int freq) {
+ duration *= 1000;
+ int period = (1.0 / freq) * 100000;
+ long elapsed_time = 0;
+ while (elapsed_time < duration) {
+ digitalWrite(pinSpeaker,HIGH);
+ delayMicroseconds(period / 2);
+ digitalWrite(pinSpeaker, LOW);
+ delayMicroseconds(period / 2);
+ elapsed_time += (period);
+ }
+}
