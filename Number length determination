@@ -1,0 +1,9 @@
+n=int(input("Enter a number: "))
+if (n>0 and n<=10):
+    print("too short")
+elif (n>10 and n<=20):
+    print("it is medium")
+elif (n>20 and n<=30):
+    print("it is long")
+else:
+    print("too long")
